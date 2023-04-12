@@ -1,24 +1,52 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## users テーブル
 
-Things you may want to cover:
+| Column             | Type    | Options     |
+| ------------------ | ------  | ----------- |
+| nickname           | string  | null: false |
+| email              | string  | null: false |
+| password           | string  | null: false |
+| last_name          | string  | null: false |
+| first_name         | string  | null: false |
+| last_name_kana     | string  | null: false |
+| first_name_kana    | string  | null: false |
+| genre_id           | integer | null: false |
 
-* Ruby version
+### Association
 
-* System dependencies
+- has_many :items
+- has_one :pay_form
 
-* Configuration
+## items テーブル
 
-* Database creation
+| Column             | Type       | Options                        |
+| ------------------ | ------     | -----------                    |
+| name               | text       | null: false                    |
+| info               | text       | null: false                    |
+| price              | integer    | null: false                    |
+| user_id            | references | null: false, foreign_key: true |
+| genre_id           | integer    | null: false                    |
 
-* Database initialization
+### Association
 
-* How to run the test suite
+- belongs_to :user
+- has_one :pay_form
 
-* Services (job queues, cache servers, search engines, etc.)
+## pay_forms テーブル
 
-* Deployment instructions
+| Column             | Type       | Options                        |
+| ------------------ | ------     | -----------                    |
+| postal_code        | integer    | null: false                    |
+| city               | string     | null: false                    |
+| addresses          | string     | null: false                    |
+| building           | string     |                                |
+| phone_number       | string     | null: false                    |
+| item_id            | references | null: false, foreign_key: true |
+| user_id            | references | null: false, foreign_key: true |
+| genre_id           | integer    | null: false                    |
 
-* ...
+### Association
+
+- belongs_to :item
+- belongs_to :user
