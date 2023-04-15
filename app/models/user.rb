@@ -8,7 +8,8 @@ class User < ApplicationRecord
   
   # パスワードには半角英数字のみとバリデーションをかける
   PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?[\d])[a-z\d]+\z/i.freeze
-  validates_format_of :password, with: PASSWORD_REGEX, message: ' is invalid. Include both letters and numbers' 
+  validates_format_of :password, with: PASSWORD_REGEX, message: ' is invalid. Include both letters and numbers'
+
   
   # last_nameとfirst_nameは全角漢字とひらがなのみとバリデーションをかける
   validates :last_name, presence: true, format: {with: /\A[一-龠ぁ-ん]+\z/, message: " is invalid. Input full-width characters" }
