@@ -25,7 +25,7 @@ RSpec.describe Item, type: :model do
       it 'nameが40字超過では保存できない' do
         @item.name = Faker::Lorem.characters(number: 41)
         @item.valid?
-        expect(@item.errors.full_messages).to include("Name is too long (maximum is 40 characters)")
+        expect(@item.errors.full_messages).to include('Name is too long (maximum is 40 characters)')
       end
       it 'infoが空では保存できない' do
         @item.info = ''
@@ -35,7 +35,7 @@ RSpec.describe Item, type: :model do
       it 'infoが1,000字超過では保存できない' do
         @item.info = Faker::Lorem.characters(number: 1001)
         @item.valid?
-        expect(@item.errors.full_messages).to include("Info is too long (maximum is 1000 characters)")
+        expect(@item.errors.full_messages).to include('Info is too long (maximum is 1000 characters)')
       end
       it 'categoryが空では保存できない' do
         @item.category_id = ''
@@ -70,19 +70,18 @@ RSpec.describe Item, type: :model do
       it 'priceが¥300未満では保存できない' do
         @item.price = 299
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price is invalid. Input half-width characters")
+        expect(@item.errors.full_messages).to include('Price is invalid. Input half-width characters')
       end
       it 'priceが¥9,999,999超過では保存できない' do
-        @item.price = 10000000
+        @item.price = 10_000_000
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price is invalid. Input half-width characters")
+        expect(@item.errors.full_messages).to include('Price is invalid. Input half-width characters')
       end
       it 'priceが全角では保存できない' do
-        @item.price = "１０００"
+        @item.price = '１０００'
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price is invalid. Input half-width characters")
+        expect(@item.errors.full_messages).to include('Price is invalid. Input half-width characters')
       end
-      
     end
   end
 end
