@@ -40,27 +40,52 @@ RSpec.describe Item, type: :model do
       it 'categoryが空では保存できない' do
         @item.category_id = ''
         @item.valid?
-        expect(@item.errors.full_messages).to include("Category can't be blank")
+        expect(@item.errors.full_messages).to include("Category can't be blank", "Category is not a number")
+      end
+      it 'category_idが"---"では保存できない' do
+        @item.category_id = 1
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Category must be other than 1")
       end
       it 'sales_statusが空では保存できない' do
         @item.sales_status_id = ''
         @item.valid?
-        expect(@item.errors.full_messages).to include("Sales status can't be blank")
+        expect(@item.errors.full_messages).to include("Sales status can't be blank", "Sales status is not a number")
+      end
+      it 'sales_statusが"---"では保存できない' do
+        @item.sales_status_id = 1
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Sales status must be other than 1")
       end
       it 'shipping_fee_statusが空では保存できない' do
         @item.shipping_fee_status_id = ''
         @item.valid?
-        expect(@item.errors.full_messages).to include("Shipping fee status can't be blank")
+        expect(@item.errors.full_messages).to include("Shipping fee status can't be blank", "Shipping fee status is not a number")
+      end
+      it 'shipping_fee_statusが"---"では保存できない' do
+        @item.shipping_fee_status_id = 1
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Shipping fee status must be other than 1")
       end
       it 'prefectureが空では保存できない' do
         @item.prefecture_id = ''
         @item.valid?
-        expect(@item.errors.full_messages).to include("Prefecture can't be blank")
+        expect(@item.errors.full_messages).to include("Prefecture can't be blank", "Prefecture is not a number")
+      end
+      it 'prefectureが"---"では保存できない' do
+        @item.prefecture_id = 1
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Prefecture must be other than 1")
       end
       it 'scheduled_deliveryが空では保存できない' do
         @item.scheduled_delivery_id = ''
         @item.valid?
-        expect(@item.errors.full_messages).to include("Scheduled delivery can't be blank")
+        expect(@item.errors.full_messages).to include("Scheduled delivery can't be blank", "Scheduled delivery is not a number")
+      end
+      it 'scheduled_deliveryが"---"では保存できない' do
+        @item.scheduled_delivery_id = 1
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Scheduled delivery must be other than 1")
       end
       it 'priceが空では保存できない' do
         @item.price = ''
@@ -80,7 +105,12 @@ RSpec.describe Item, type: :model do
       it 'priceが全角では保存できない' do
         @item.price = '１０００'
         @item.valid?
-        expect(@item.errors.full_messages).to include('Price is invalid. Input half-width characters')
+        expect(@item.errors.full_messages).to include("Price is invalid. Input half-width characters")
+      end
+      it 'userが紐付いていないと保存できない' do
+        @item.user = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include('User must exist')
       end
     end
   end
