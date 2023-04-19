@@ -1,5 +1,7 @@
 class ItemsController < ApplicationController
-  before_action :move_to_login, only: [:new]
+  before_action :authenticate_user!, only: [:new, :edit, :create ]
+  before_action :move_to_index, only: [:edit]
+  before_action :set_item, only: [:show, :edit, :update]
 
   def index
     @items = Item.includes(:user).order(created_at: :desc)
@@ -19,7 +21,19 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @item = Item.find(params[:id])
+
+  end
+
+  def edit
+
+  end
+
+  def update
+    if @item.update(item_params)
+      redirect_to item_path(@item.id)
+    else
+      render :edit
+    end 
   end
 
   private
@@ -29,9 +43,14 @@ class ItemsController < ApplicationController
                                  :prefecture_id, :scheduled_delivery_id).merge(user_id: current_user.id)
   end
 
-  def move_to_login
-    return if user_signed_in?
+  def set_item
+    @item = Item.find(params[:id])
+  end
 
-    redirect_to new_user_session_path
+  def move_to_index
+    item = Item.find(params[:id])
+    unless current_user.id == item.user.id
+      redirect_to root_path
+    end
   end
 end
