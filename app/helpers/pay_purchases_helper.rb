@@ -1,0 +1,2 @@
+module PayPurchasesHelper
+end
