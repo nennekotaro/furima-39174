@@ -73,6 +73,11 @@ RSpec.describe PayFormPurchaseForm, type: :model do
         @pay_form_purchase_form.valid?
         expect(@pay_form_purchase_form.errors.full_messages).to include("Item can't be blank")
       end
+      it "tokenが空では登録できないこと" do
+        @pay_form_purchase_form.token = nil
+        @pay_form_purchase_form.valid?
+        expect(@pay_form_purchase_form.errors.full_messages).to include("Token can't be blank")
+      end
     end
 
   end
