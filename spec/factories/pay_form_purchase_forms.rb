@@ -6,6 +6,6 @@ FactoryBot.define do
     addresses              { Faker::Address.street_address }
     building               { Faker::Lorem.word }
     phone_number           { Faker::PhoneNumber.subscriber_number(length: 11) }
-    token                  {"tok_#{SecureRandom.hex(10)}"}
+    token                  { "tok_#{SecureRandom.hex(10)}" }
   end
 end

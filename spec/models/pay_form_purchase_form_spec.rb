@@ -26,7 +26,7 @@ RSpec.describe PayFormPurchaseForm, type: :model do
       it 'postal_codeが半角のハイフンを含んだ正しい形式でないと保存できないこと' do
         @pay_form_purchase_form.postal_code = '1234567'
         @pay_form_purchase_form.valid?
-        expect(@pay_form_purchase_form.errors.full_messages).to include("Postal code is invalid. Enter it as follows (e.g. 123-4567)")
+        expect(@pay_form_purchase_form.errors.full_messages).to include('Postal code is invalid. Enter it as follows (e.g. 123-4567)')
       end
       it 'prefectureを選択していないと保存できないこと' do
         @pay_form_purchase_form.prefecture_id = 1
@@ -51,17 +51,17 @@ RSpec.describe PayFormPurchaseForm, type: :model do
       it 'phone_numberが10桁未満では登録できない' do
         @pay_form_purchase_form.phone_number = '1111'
         @pay_form_purchase_form.valid?
-        expect(@pay_form_purchase_form.errors.full_messages).to include("Phone number is too short")
+        expect(@pay_form_purchase_form.errors.full_messages).to include('Phone number is too short')
       end
       it 'phone_numberが11桁超過では登録できない' do
         @pay_form_purchase_form.phone_number = '1111111111111'
         @pay_form_purchase_form.valid?
-        expect(@pay_form_purchase_form.errors.full_messages).to include("Phone number is too short")
+        expect(@pay_form_purchase_form.errors.full_messages).to include('Phone number is too short')
       end
       it 'phone_numberが全角数値では登録できない' do
         @pay_form_purchase_form.phone_number = '１１１１１１１１１１'
         @pay_form_purchase_form.valid?
-        expect(@pay_form_purchase_form.errors.full_messages).to include("Phone number is invalid. Input only number")
+        expect(@pay_form_purchase_form.errors.full_messages).to include('Phone number is invalid. Input only number')
       end
       it 'userが紐付いていないと保存できないこと' do
         @pay_form_purchase_form.user_id = nil
@@ -73,12 +73,11 @@ RSpec.describe PayFormPurchaseForm, type: :model do
         @pay_form_purchase_form.valid?
         expect(@pay_form_purchase_form.errors.full_messages).to include("Item can't be blank")
       end
-      it "tokenが空では登録できないこと" do
+      it 'tokenが空では登録できないこと' do
         @pay_form_purchase_form.token = nil
         @pay_form_purchase_form.valid?
         expect(@pay_form_purchase_form.errors.full_messages).to include("Token can't be blank")
       end
     end
-
   end
 end

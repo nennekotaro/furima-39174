@@ -22,18 +22,20 @@ class PayPurchasesController < ApplicationController
   private
 
   def pay_form_purchase_form_params
-    params.require(:pay_form_purchase_form).permit(:postal_code, :prefecture_id, :city, :addresses, :building, :phone_number).merge(user_id: current_user.id, item_id: params[:item_id], token: params[:token])
+    params.require(:pay_form_purchase_form).permit(:postal_code, :prefecture_id, :city, :addresses, :building, :phone_number).merge(
+      user_id: current_user.id, item_id: params[:item_id], token: params[:token]
+    )
   end
 
   def check_item_sold
     @item = Item.find(params[:item_id])
-    if @item.pay_purchase.present? || current_user.id == @item.user.id
-      redirect_to root_path
-    end
+    return unless @item.pay_purchase.present? || current_user.id == @item.user.id
+
+    redirect_to root_path
   end
 
   def pay_item
-    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
+    Payjp.api_key = ENV['PAYJP_SECRET_KEY']
     Payjp::Charge.create(
       amount: @item.price,
       card: pay_form_purchase_form_params[:token],
