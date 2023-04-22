@@ -1,7 +1,7 @@
 class PayPurchasesController < ApplicationController
   before_action :authenticate_user!, only: [:index, :create]
-  before_action :check_item_sold, only: [:index, :create]
   before_action :set_item, only: [:index, :create]
+  before_action :check_item_sold, only: [:index, :create]
 
   def index
     @pay_form_purchase_form = PayFormPurchaseForm.new
@@ -28,7 +28,6 @@ class PayPurchasesController < ApplicationController
   end
 
   def check_item_sold
-    @item = Item.find(params[:item_id])
     return unless @item.pay_purchase.present? || current_user.id == @item.user.id
 
     redirect_to root_path
