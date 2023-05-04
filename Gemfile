@@ -78,3 +78,4 @@ group :production do
   gem 'unicorn', '5.4.1'
 end
 gem 'date', '3.3.3'
+gem 'mail', '2.7.1'
